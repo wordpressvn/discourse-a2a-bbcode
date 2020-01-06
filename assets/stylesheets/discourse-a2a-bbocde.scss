@@ -1,0 +1,25 @@
+
+/* Disable the end of line after a button block */
+.d-editor-preview a[class^="a2a_button_"] {
+  float: none !important;
+}
+
+.abb-follow, .abb-share {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+/* Replace the + button by three dots */
+/*
+.a2a_dd > span {
+  background-color: transparent !important;
+  svg {
+    display:none;
+  }
+  &:after {
+    content: "...";
+    color: grey;
+    font-size: 25px;
+  }
+}
+*/

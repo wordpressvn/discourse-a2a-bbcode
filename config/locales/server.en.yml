@@ -1,0 +1,4 @@
+en:
+  site_settings:
+    discourse_a2a_bbcode_enabled: 'Enable the Discourse AddToAny BBCode plugin'
+    discourse_a2a_bbcode_categories: 'Coma-separated list of categories where social buttons will be activated. Leave empty to activate social buttons everywhere.'

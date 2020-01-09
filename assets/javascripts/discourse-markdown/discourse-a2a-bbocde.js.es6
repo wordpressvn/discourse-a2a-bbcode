@@ -15,26 +15,27 @@ export function setup(helper) {
 
   helper.registerPlugin(md => {
     // services: coma-separated list of services. See the full list at https://www.addtoany.com/buttons/customize/follow_buttons.  => mandatory
-    // user: username of the account to follow => mandatory
+    // user: username of the account to follow => mandatory if no href
+    // href: link to go to => mandatory if no user
     md.inline.bbcode.ruler.push('abbfollow', {
       tag: 'abbfollow',
       replace: function(state, tagInfo, content) {
-        const user = tagInfo.attrs.user
-        if (!user) {
+        // Provide user OR href, one is mandatory
+        if (!!tagInfo.attrs.user === !!tagInfo.attrs.href) {
           return false
         }
-        const services = tagInfo.attrs.services
-        if (!services) {
+        if (!tagInfo.attrs.services) {
           return false
         }
         let token = state.push(`${tag}_open`, tag, 1)
         token.attrs = [['class', 'abb-follow']]
         token = state.push('html_raw', '', 0)
-        const servicesHtml = services
+        const innerHtml = tagInfo.attrs.user
+          ? `data-a2a-follow="${tagInfo.attrs.user}"`
+          : `href="${tagInfo.attrs.href}"`
+        const servicesHtml = tagInfo.attrs.services
           .split(',')
-          .map(
-            s => `<a class="a2a_button_${s}" data-a2a-follow="${user}">${s}</a>`
-          )
+          .map(s => `<a class="a2a_button_${s}" ${innerHtml}>${s}</a>`)
           .join('\n')
         // The a2a_target class is required to use the "target" AddToAny argument
         token.content = `
